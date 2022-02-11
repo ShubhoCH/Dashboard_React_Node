@@ -3,7 +3,7 @@ import {Table} from "../components/Table";
 
 function Dashboard() {
     return (
-        <div>
+        <div className="background">
             <h1>Dashboard WA</h1>
             <Table/>
         </div>
