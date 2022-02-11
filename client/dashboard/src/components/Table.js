@@ -1,46 +1,18 @@
-import React, { useState , useEffect } from "react";
+import React, {useState, useEffect, useMemo} from "react";
 import { AgGridReact } from "ag-grid-react";
 import { callApi } from "../api/api";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
-const columns = [
-  {
-    headerName: "Name",
-    field: "name",
-    checkboxSelection: false,
-  },
-  {
-    headerName: "Age",
-    field: "age",
-  },
-  {
-    headerName: "Town",
-    field: "town",
-  },
-  {
-    headerName: "State",
-    field: "state",
-  },
-  {
-    headerName: "Mobile",
-    field: "mobile",
-  },
-  {
-    headerName: "Availiblity",
-    field: "service",
-  },
-];
-const defaultColDef = {
-  sortable: true,
-  editable: false,
-  filter: true,
-  floatingFilter: true,
-  flex: 1,
-};
 
 export const Table = () => {
   const [tableRowData, setTableRowData] = useState([]);
+
+  // grid styling
+  const gridStyle = useMemo(() => ({
+    height: '85vh',
+    width: '95%'
+  }), []);
 
   //api configuration
   const config = {
@@ -63,12 +35,50 @@ export const Table = () => {
       fetchData();
   },[])
 
+  const columns = [
+    {
+      headerName: "Name",
+      field: "name",
+      checkboxSelection: false,
+    },
+    {
+      headerName: "Age",
+      field: "age",
+    },
+    {
+      headerName: "Town",
+      field: "town",
+    },
+    {
+      headerName: "State",
+      field: "state",
+    },
+    {
+      headerName: "Mobile",
+      field: "mobile",
+    },
+    {
+      headerName: "Availiblity",
+      field: "service",
+    },
+  ];
+  const defaultColDef = {
+    sortable: true,
+    filter: true,
+    floatingFilter: true,
+    resizable: true,
+    flex: 1,
+  };
+
+
   return (
-    <div className="ag-theme-alpine" style={{ height: 1000, width: "100%" }}>
+    <div className="ag-theme-alpine" style={gridStyle}>
       <AgGridReact
         rowData={tableRowData}
         columnDefs={columns}
         defaultColDef={defaultColDef}
+        pivotPanelShow={'always'}
+        pagination={true}
       />
     </div>
   );
